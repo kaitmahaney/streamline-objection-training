@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamline Objection Training Suite</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { Volume2, Trophy, Star, Clock, Users, Zap, RotateCcw, CheckCircle, XCircle } = lucide;
+
+        const objections = [
+          { id: 1, text: "The savings is not enough", category: "Value", difficulty: "Medium" },
+          { id: 2, text: "I don't want to go back to 30 years", category: "Terms", difficulty: "Medium" },
+          { id: 3, text: "I want to wait for rates to go down more", category: "Timing", difficulty: "Hard" },
+          { id: 4, text: "I've heard the Fed is going to drop interest rates", category: "Timing", difficulty: "Hard" },
+          { id: 5, text: "I don't want to pay cost", category: "Cost", difficulty: "Easy" },
+          { id: 6, text: "I received a better offer from another lender", category: "Competition", difficulty: "Hard" },
+          { id: 7, text: "I don't feel like going through the process of refinancing", category: "Process", difficulty: "Medium" },
+          { id: 8, text: "I am tired of getting calls from you guys about this, I'm not interested", category: "Resistance", difficulty: "Hard" },
+          { id: 9, text: "I'm not interested", category: "Resistance", difficulty: "Easy" },
+          { id: 10, text: "I need to speak with my spouse", category: "Stall", difficulty: "Medium" },
+          { id: 11, text: "I already spoke to someone at your company about this, I'm not interested", category: "Resistance", difficulty: "Medium" },
+          { id: 12, text: "I need time to think about it", category: "Timing", difficulty: "Medium" },
+          { id: 13, text: "I only plan to stay in the home for a few more years, I don't think it's worth it", category: "Value", difficulty: "Medium" },
+          { id: 14, text: "I don't want my credit ran", category: "Process", difficulty: "Easy" },
+          { id: 15, text: "I had a bad experience with my last refinance", category: "Process", difficulty: "Hard" },
+          { id: 16, text: "I received a letter in the mail from another lender offering me a lower rate", category: "Competition", difficulty: "Medium" },
+          { id: 17, text: "I am going to call my local bank and see if they can offer me something lower", category: "Competition", difficulty: "Medium" },
+          { id: 18, text: "I'm selling my home soon", category: "Circumstance", difficulty: "Medium" }
+        ];
+
+        function GameSelector() {
+          const [selectedGame, setSelectedGame] = useState(null);
+          
+          const games = [
+            { id: 'spinner', name: 'Objection Spinner', Icon: RotateCcw, description: 'Spin the wheel for random objections' },
+            { id: 'speed', name: 'Speed Challenge', Icon: Zap, description: 'Race against the clock' },
+            { id: 'jeopardy', name: 'Objection Jeopardy', Icon: Trophy, description: 'Game show format' },
+            { id: 'teams', name: 'Team Battle', Icon: Users, description: 'Compete in teams' },
+            { id: 'recipe', name: 'Recipe Cards', Icon: Star, description: 'Create rebuttal recipes' },
+            { id: 'feud', name: 'Family Feud', Icon: Users, description: 'Top objections survey' },
+            { id: 'millionaire', name: 'Who Wants to be a Millionaire', Icon: Trophy, description: 'Answer your way to the top' },
+            { id: 'matching', name: 'Drag & Match', Icon: Zap, description: 'Match objections to rebuttals' }
+          ];
+
+          if (selectedGame === 'spinner') return React.createElement(ObjectionSpinner, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'speed') return React.createElement(SpeedChallenge, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'jeopardy') return React.createElement(ObjectionJeopardy, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'teams') return React.createElement(TeamBattle, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'recipe') return React.createElement(RecipeCards, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'feud') return React.createElement(FamilyFeud, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'millionaire') return React.createElement(Millionaire, { onBack: () => setSelectedGame(null) });
+          if (selectedGame === 'matching') return React.createElement(DragMatch, { onBack: () => setSelectedGame(null) });
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-12">
+                  <h1 className="text-5xl font-bold text-indigo-900 mb-4">Streamline Objection Training</h1>
+                  <p className="text-xl text-indigo-700">Choose your training game to master objection handling</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {games.map(game => (
+                    <button
+                      key={game.id}
+                      onClick={() => setSelectedGame(game.id)}
+                      className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                    >
+                      <game.Icon className="w-16 h-16 mx-auto mb-4 text-indigo-600" />
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2">{game.name}</h3>
+                      <p className="text-gray-600">{game.description}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // Include all game components here - I'll paste from the working artifact
+        
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(GameSelector));
+    </script>
+</body>
+</html>
